@@ -1,12 +1,13 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import Quill from 'quill';
 
 @customElement('bb-editor')
 export class BbEditor extends LitElement {
     @property({ type: String }) format: string;
     @state() saved: boolean;
-
+    @query('div.editor') editor: HTMLDivElement;
+    
     private quill?: Quill;
 
     static styles = css`
@@ -20,10 +21,13 @@ export class BbEditor extends LitElement {
     `;
 
     firstUpdated() {
-        this.quill = new Quill(this.renderRoot.querySelector(".editor") as HTMLElement, {
-            theme: this.format ? this.format : 'snow'
-        });
         
+        const options = {
+            placeholder: 'écrire ici :)',
+            theme: 'snow'
+        };
+
+        this.quill = new Quill(this.editor, options);        
     }
 
     protected render() {
