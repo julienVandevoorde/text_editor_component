@@ -21,12 +21,14 @@ export class BbEditor extends LitElement {
         }
     `;
 
+    textEdited(){
 
+    }
 
     firstUpdated() {
         
         const options = {
-            placeholder: 'type here',
+            placeholder: 'écrire ici :)',
             theme: 'snow'
         };
 
@@ -36,7 +38,8 @@ export class BbEditor extends LitElement {
     protected render() {
         return html`
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.snow.css">
-            <div class="editor"></div>            
+            <div class="editor"></div>
+            <textarea class="result"></textarea>
         `;
     }
 

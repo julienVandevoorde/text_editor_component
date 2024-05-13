@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Éditeur Lit</title>
-    <script type="module" src="src/bb-editor-test.ts"></script>
+    <script type="module" src="src/bbeditor.ts"></script>
     <script function textEdited(){
       
     }></script>
 </head>
-<body>
+<body>    
     <bb-editor .format="snow" @text-edited=${textEdited}></bb-editor>
     <textarea class="result"></textarea>
 </body>

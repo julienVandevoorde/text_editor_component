@@ -12,7 +12,7 @@ export class BbEditor extends LitElement {
     static styles = css`
         :host {
             display: block;
-            padding: 16px;
+            padding: 20px;
         }
         .editor { 
             height: 300px; 
