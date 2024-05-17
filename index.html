@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Éditeur Lit</title>
-    <script type="module" src="src/bb-editor-test.ts"></script>
-    <script function textEdited(){
-      
-    }></script>
+    <title>Text Editor</title>
+    <script type="module" src="src/bb-editor-test2.ts"></script>
 </head>
 <body>
-    <bb-editor .format="snow" @text-edited=${textEdited}></bb-editor>
-    <textarea class="result"></textarea>
+    <bb-editor></bb-editor>
+    <script>
+        document.querySelector('bb-editor').addEventListener('content-saved', (event) => {
+            console.log('Content saved:', event.detail.content);
+            // You can handle the content here, e.g., display it or send it to a server
+        });
+    </script>
 </body>
 </html>
