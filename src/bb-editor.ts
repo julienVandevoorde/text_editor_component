@@ -1,14 +1,12 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import Quill from 'quill';
 
 @customElement('bb-editor')
 export class BbEditor extends LitElement {
-    @property({ type: String }) format: string;
-    @state() saved: boolean;
-    @query('.editor') editor: HTMLDivElement;
-    @query('.result') result: HTMLDivElement;
-    
+    @property({ type: String }) format: string = 'html';
+    @query('.editor') editor!: HTMLDivElement;
+
     private quill?: Quill;
 
     static styles = css`
@@ -21,23 +19,39 @@ export class BbEditor extends LitElement {
         }
     `;
 
-
+    createRenderRoot() {
+        return this;
+    }
 
     firstUpdated() {
-        
         const options = {
-            placeholder: 'type here',
+            placeholder: 'Type here',
             theme: 'snow'
         };
 
-        this.quill = new Quill(this.editor, options);        
+        this.quill = new Quill(this.editor, options);
+        console.log('Quill initialized');
+
+        this.quill.on('text-change', () => {
+            this.handleTextChange();
+        });
+    }
+
+    handleTextChange() {
+        const content = this.quill?.root.innerHTML;
+        if (content) {
+            this.dispatchEvent(new CustomEvent('bb-edited', {
+                detail: { content },
+                bubbles: true,
+                composed: true
+            }));
+        }
     }
 
     protected render() {
         return html`
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.snow.css">
-            <div class="editor"></div>            
+            <div class="editor"></div>
         `;
     }
-
 }

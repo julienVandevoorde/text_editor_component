@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Text Editor</title>
-    <script type="module" src="src/bb-editor-test2.ts"></script>
+    <script type="module" src="src/bb-editor.ts"></script>
+    
 </head>
 <body>
     <bb-editor></bb-editor>
     <script>
-        document.querySelector('bb-editor').addEventListener('content-saved', (event) => {
-            console.log('Content saved:', event.detail.content);
-            // You can handle the content here, e.g., display it or send it to a server
-        });
+        document.querySelector('bb-editor').addEventListener('bb-edited', (e => {
+            console.log(e.detail)
+        }))
     </script>
 </body>
 </html>
