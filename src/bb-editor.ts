@@ -5,6 +5,7 @@ import Quill from 'quill';
 @customElement('bb-editor')
 export class BbEditor extends LitElement {
     @property({ type: String }) format: string = 'html';
+    @property() text: string
     @query('.editor') editor!: HTMLDivElement;
 
     private quill?: Quill;
@@ -14,28 +15,33 @@ export class BbEditor extends LitElement {
             display: block;
             padding: 20px;
         }
-        .editor { 
-            height: 300px; 
-        }
     `;
 
-    createRenderRoot() {
-        return this;
+createRenderRoot() {
+    return this;
+}
+
+    
+firstUpdated() {
+    const options = {
+        placeholder: 'Type here',
+        theme: 'snow'
+    };
+
+    this.quill = new Quill(this.editor, options);
+    this.quill.root.style.height = '100px'; //height directement ici car ça fonctionne pas dans le CSS
+    console.log('Quill initialized');
+
+    //définir le texte inital
+    if (this.text) {
+        this.quill.setText(this.text);
     }
 
-    firstUpdated() {
-        const options = {
-            placeholder: 'Type here',
-            theme: 'snow'
-        };
+    this.quill.on('text-change', () => {
+        this.handleTextChange();
+    });
+}
 
-        this.quill = new Quill(this.editor, options);
-        console.log('Quill initialized');
-
-        this.quill.on('text-change', () => {
-            this.handleTextChange();
-        });
-    }
 
     handleTextChange() {
         const content = this.quill?.root.innerHTML;
